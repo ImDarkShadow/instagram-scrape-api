@@ -8,7 +8,9 @@ const userName = process.env.USER_NAME;
 let profileUrl = `https://imginn.com/${userName}`;
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+  });
   const page = await browser.newPage();
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0"
@@ -18,7 +20,7 @@ let profileUrl = `https://imginn.com/${userName}`;
   await page.goto(profileUrl);
 
   // // Set the viewport size
-  await page.setViewport({ width: 1280, height: 8000 });
+  await page.setViewport({ width: 1280, height: 5000 });
 
   // // Set the amount to scroll per step (in pixels)
   // const scrollStep = 2250;
@@ -49,7 +51,16 @@ let profileUrl = `https://imginn.com/${userName}`;
         break;
       }
 
-      await loadMoreButton.click();
+      // const isClickable = await loadMoreButton.isIntersectingViewport();
+      // if (!isClickable) {
+      //   // Handle the case where the button is not clickable
+      //   console.log("Button is not clickable");
+      //   break;
+      // }
+      await page.evaluate(
+        (loadMoreButton) => loadMoreButton.click(),
+        loadMoreButton
+      );
       await page.waitForSelector(".load-more", {
         visible: true,
       });
