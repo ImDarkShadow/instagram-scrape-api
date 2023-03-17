@@ -1,0 +1,24 @@
+{
+  "name": "instagram-scrape-api",
+  "version": "1.0.0",
+  "description": "A package to scrpae instagram via imginn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [
+    "instagram",
+    "api",
+    "scrape",
+    "search"
+  ],
+  "author": "Pritam Das",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.3",
+    "got": "^12.6.0",
+    "puppeteer": "^19.7.5"
+  }
+}
