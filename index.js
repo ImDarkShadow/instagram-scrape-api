@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
+import MiniSearch from "minisearch";
 
 //load .env file
 import dotenv from "dotenv";
@@ -43,31 +44,24 @@ let profileUrl = `https://imginn.com/${userName}`;
 
   //   // Increment the current scroll position
   //   currentScroll += scrollStep;
-  try {
-    while (true) {
-      const loadMoreButton = await page.$(".load-more");
-      if (!loadMoreButton) {
-        break;
-      }
-
-      // const isClickable = await loadMoreButton.isIntersectingViewport();
-      // if (!isClickable) {
-      //   // Handle the case where the button is not clickable
-      //   console.log("Button is not clickable");
-      //   break;
-      // }
-      await page.evaluate(
-        (loadMoreButton) => loadMoreButton.click(),
-        loadMoreButton
-      );
-      await page.waitForSelector(".load-more", {
-        visible: true,
-        timeout: 5000,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   while (true) {
+  //     const loadMoreButton = await page.$(".load-more");
+  //     if (!loadMoreButton) {
+  //       break;
+  //     }
+  //     await page.evaluate(
+  //       (loadMoreButton) => loadMoreButton.click(),
+  //       loadMoreButton
+  //     );
+  //     await page.waitForSelector(".load-more", {
+  //       visible: true,
+  //       timeout: 5000,
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   // Take a screenshot of the page
   await page.screenshot({ fullPage: true, path: "example.png" });
@@ -98,14 +92,34 @@ let profileUrl = `https://imginn.com/${userName}`;
   //   );
 
   let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
-    postLinks.map((link) => {
+    postLinks.map((link, index) => {
       const img = link.querySelector("img");
-      return { link: link.href, thumbnail: img.src, alt: img.alt };
+      return {
+        id: index + 1,
+        link: link.href,
+        thumbnail: img.src,
+        alt: img.alt,
+      };
     })
   );
+
   console.log(postLinks);
-  postLinks = postLinks.join("\n");
-  fs.writeFileSync("links2.txt", postLinks);
+  console.log(postLinks.length);
+  console.log(typeof postLinks);
+
+  // postLinks = postLinks.join("\n");
+  // fs.writeFileSync("links2.txt", postLinks);
+
+  let miniSearch = new MiniSearch({
+    idField: "id", // the name of the field used as unique identifier
+    fields: ["alt", "link"], // fields to index for full-text search
+    storeFields: ["link", "thumbnail", "alt"], // fields to return with search results
+  });
+  miniSearch.addAll(postLinks);
+
+  let results = miniSearch.search("euphoricbish");
+
+  console.log(results);
   // Close the browser
   await browser.close();
 })();
