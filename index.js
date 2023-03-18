@@ -2,6 +2,7 @@ import puppeteer from "puppeteer";
 import fs from "fs";
 import MiniSearch from "minisearch";
 import checkError from "./libs/isError.js";
+import loadPosts from "./libs/loadPosts.js";
 
 //load .env file
 import dotenv from "dotenv";
@@ -24,19 +25,6 @@ let profileUrl = `https://imginn.com/${userName}`;
   await page.setViewport({ width: 1280, height: 5000 });
 
   console.log(await checkError(page));
-
-  // const checkError = await page.evaluate(() => {
-  //   const privateAccount = document.querySelector(".error");
-  //   const accountNotFound = document.querySelector(".error-page");
-
-  //   if (privateAccount) {
-  //     return privateAccount.textContent.trim();
-  //   }else if(accountNotFound){
-  //     return accountNotFound.textContent.trim();
-  //   }else{
-  //     return null;
-  //   }
-  // });
 
   // console.log(errorText);
   // // Set the amount to scroll per step (in pixels)
@@ -79,7 +67,7 @@ let profileUrl = `https://imginn.com/${userName}`;
   // } catch (error) {
   //   console.log(error);
   // }
-
+  await loadPosts(page);
   // Take a screenshot of the page
   await page.screenshot({ fullPage: true, path: "example.png" });
   const pageContent = await page.content();
