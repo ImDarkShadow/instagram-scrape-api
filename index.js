@@ -1,6 +1,5 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
-import MiniSearch from "minisearch";
 import checkError from "./libs/isError.js";
 import loadPosts from "./libs/loadPosts.js";
 import searchPost from "./libs/searchPost.js";
