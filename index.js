@@ -15,7 +15,6 @@ let profileUrl = `https://imginn.com/${userName}`;
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0"
   );
-  console.log(`https://imginn.com/${userName}`);
   // Navigate to the URL
   await page.goto(profileUrl);
 
@@ -32,7 +31,7 @@ let profileUrl = `https://imginn.com/${userName}`;
   //   await page.evaluate(`window.scrollTo(0, ${currentScroll})`);
 
   //   // Wait for the page to render the new content
-  //   await page.waitForTimeout(1000);
+  //await page.waitForTimeout(10000);
 
   //   // Get the height of the page
   //   const pageHeight = await page.evaluate(() => document.body.scrollHeight);
@@ -63,6 +62,7 @@ let profileUrl = `https://imginn.com/${userName}`;
       );
       await page.waitForSelector(".load-more", {
         visible: true,
+        timeout: 5000,
       });
     }
   } catch (error) {
@@ -75,7 +75,37 @@ let profileUrl = `https://imginn.com/${userName}`;
 
   // Save the content to a file
   fs.writeFileSync("page.html", pageContent);
+  const downloadLinks = await page.$$("a.download");
+  // let links = [];
+  // // Iterate through the links and extract their 'href' attributes
+  // for (const link of downloadLinks) {
+  //   const href = await link.getProperty("href");
+  //   const downloadUrl = await href.jsonValue();
+  //   links.push(downloadUrl);
+  // }
+  // links = links.join("\n");
+  // fs.writeFileSync("links.txt", links);
+  const links = await page.$$eval('a[href^="/p/"]', (links) => {
+    const hrefs = links.map((link) => link.href);
+    const alts = links.map((link) => link.getAttribute("alt"));
+    return { hrefs, alts };
+  });
+  // const linksArray = await links();
+  // console.log(linksArray); // prints the array of links and alt texts
+  // pr
+  //   let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
+  //     postLinks.map((link) => link.href)
+  //   );
 
+  let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
+    postLinks.map((link) => {
+      const img = link.querySelector("img");
+      return { link: link.href, thumbnail: img.src, alt: img.alt };
+    })
+  );
+  console.log(postLinks);
+  postLinks = postLinks.join("\n");
+  fs.writeFileSync("links2.txt", postLinks);
   // Close the browser
   await browser.close();
 })();
