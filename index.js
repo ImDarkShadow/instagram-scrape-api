@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
 import MiniSearch from "minisearch";
+import checkError from "./libs/isError.js";
 
 //load .env file
 import dotenv from "dotenv";
@@ -22,6 +23,22 @@ let profileUrl = `https://imginn.com/${userName}`;
   // // Set the viewport size
   await page.setViewport({ width: 1280, height: 5000 });
 
+  console.log(await checkError(page));
+
+  // const checkError = await page.evaluate(() => {
+  //   const privateAccount = document.querySelector(".error");
+  //   const accountNotFound = document.querySelector(".error-page");
+
+  //   if (privateAccount) {
+  //     return privateAccount.textContent.trim();
+  //   }else if(accountNotFound){
+  //     return accountNotFound.textContent.trim();
+  //   }else{
+  //     return null;
+  //   }
+  // });
+
+  // console.log(errorText);
   // // Set the amount to scroll per step (in pixels)
   // const scrollStep = 2250;
 
@@ -103,10 +120,6 @@ let profileUrl = `https://imginn.com/${userName}`;
     })
   );
 
-  console.log(postLinks);
-  console.log(postLinks.length);
-  console.log(typeof postLinks);
-
   // postLinks = postLinks.join("\n");
   // fs.writeFileSync("links2.txt", postLinks);
 
@@ -117,9 +130,9 @@ let profileUrl = `https://imginn.com/${userName}`;
   });
   miniSearch.addAll(postLinks);
 
-  let results = miniSearch.search("euphoricbish");
+  //let results = miniSearch.search("euphoricbish");
 
-  console.log(results);
+  // console.log(results);
   // Close the browser
   await browser.close();
 })();
