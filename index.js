@@ -3,6 +3,7 @@ import fs from "fs";
 import MiniSearch from "minisearch";
 import checkError from "./libs/isError.js";
 import loadPosts from "./libs/loadPosts.js";
+import searchPost from "./libs/searchPost.js";
 
 //load .env file
 import dotenv from "dotenv";
@@ -73,8 +74,8 @@ let profileUrl = `https://imginn.com/${userName}`;
   const pageContent = await page.content();
 
   // Save the content to a file
-  fs.writeFileSync("page.html", pageContent);
-  const downloadLinks = await page.$$("a.download");
+  // fs.writeFileSync("page.html", pageContent);
+  // const downloadLinks = await page.$$("a.download");
   // let links = [];
   // // Iterate through the links and extract their 'href' attributes
   // for (const link of downloadLinks) {
@@ -96,30 +97,30 @@ let profileUrl = `https://imginn.com/${userName}`;
   //     postLinks.map((link) => link.href)
   //   );
 
-  let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
-    postLinks.map((link, index) => {
-      const img = link.querySelector("img");
-      return {
-        id: index + 1,
-        link: link.href,
-        thumbnail: img.src,
-        alt: img.alt,
-      };
-    })
-  );
+  // let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
+  //   postLinks.map((link, index) => {
+  //     const img = link.querySelector("img");
+  //     return {
+  //       id: index + 1,
+  //       link: link.href,
+  //       thumbnail: img.src,
+  //       alt: img.alt,
+  //     };
+  //   })
+  // );
 
-  // postLinks = postLinks.join("\n");
-  // fs.writeFileSync("links2.txt", postLinks);
+  // // postLinks = postLinks.join("\n");
+  // // fs.writeFileSync("links2.txt", postLinks);
 
-  let miniSearch = new MiniSearch({
-    idField: "id", // the name of the field used as unique identifier
-    fields: ["alt", "link"], // fields to index for full-text search
-    storeFields: ["link", "thumbnail", "alt"], // fields to return with search results
-  });
-  miniSearch.addAll(postLinks);
+  // let miniSearch = new MiniSearch({
+  //   idField: "id", // the name of the field used as unique identifier
+  //   fields: ["alt", "link"], // fields to index for full-text search
+  //   storeFields: ["link", "thumbnail", "alt"], // fields to return with search results
+  // });
+  // miniSearch.addAll(postLinks);
 
   //let results = miniSearch.search("euphoricbish");
-
+  console.log(await searchPost(page, "euphoricbish"));
   // console.log(results);
   // Close the browser
   await browser.close();
