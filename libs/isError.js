@@ -1,30 +1,31 @@
 const checkError = async (page) => {
-  return await page.evaluate(() => {
-    const privateAccount = document.querySelector(".error");
-    const accountNotFound = document.querySelector(".error-page");
+    return await page.evaluate(() => {
+        const privateAccount = document.querySelector(".error");
+        const accountNotFound = document.querySelector(".page-error");
 
-    if (privateAccount) {
-      return privateAccount.textContent.trim();
-    } else if (accountNotFound) {
-      return accountNotFound.textContent.trim();
-    } else {
-      return null;
-    }
-  });
+        if (privateAccount) {
+            return privateAccount.textContent.trim();
+        } else if (accountNotFound) {
+            return accountNotFound.textContent.trim();
+        } else {
+            return false;
+        }
+
+    });
 };
 
 const isPrivate = (page) => {
-  return page.evaluate(() => {
-    const privateAccount = document.querySelector(".error");
-    return !!privateAccount
-  });
+    return page.evaluate(() => {
+        const privateAccount = document.querySelector(".error");
+        return !!privateAccount
+    });
 };
 
 const isVaidAccount = async (page) => {
-  return await page.evaluate(() => {
-    const accountNotFound = document.querySelector(".error-page");
+    return await page.evaluate(() => {
+        const accountNotFound = document.querySelector(".page-error");
 
-    return !!accountNotFound
-  });
+        return !!accountNotFound
+    });
 };
-export { checkError, isPrivate, isVaidAccount };
+export {checkError, isPrivate, isVaidAccount};

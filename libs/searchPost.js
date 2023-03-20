@@ -1,8 +1,5 @@
 import MiniSearch from "minisearch";
-
 const searchPost = async (page, searchTerm) => {
-  console.log("searching for posts");
-  console.log(searchTerm)
   let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
     postLinks.map((link, index) => {
       const img = link.querySelector("img");
