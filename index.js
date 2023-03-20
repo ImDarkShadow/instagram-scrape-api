@@ -154,15 +154,8 @@ class instagramUser {
     //delay execution for 1 second
    await new Promise((resolve) => setTimeout(resolve, 5000));
 
-    await isPrivate(this.page)
-        .then(xj => {
-          console.log('isPrivate Promise resolved with:', xj);
-          browser.close();
-          return xj;
-        })
-        .catch(error => {
-          console.log('isPrivate Promise rejected with:', error);
-        });
+
+    return await isPrivate(this.page)
 
   }
   async isUserExist() {
@@ -171,8 +164,15 @@ class instagramUser {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("waiting for page object");
     }
-    return await isVaidAccount(this.page);
+
+
+    return await isVaidAccount(this.page)
+
   }
+close(){
+    browser.close();
+}
+
 }
 
 export { instagramUser };
