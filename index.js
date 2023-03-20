@@ -1,7 +1,8 @@
 import puppeteer from "puppeteer";
 import { checkError, isPrivate, isVaidAccount } from "./libs/isError.js";
+import loadPosts from "./libs/loadPosts.js";
 // import loadPosts from "./libs/loadPosts.js";
-// import searchPost from "./libs/searchPost.js";
+ import searchPost from "./libs/searchPost.js";
 
 //load .env file
 // import dotenv from "dotenv";
@@ -152,7 +153,11 @@ class instagramUser {
 
   async isAccountPrivate() {
     //delay execution for 1 second
-   await new Promise((resolve) => setTimeout(resolve, 5000));
+    while (this.page == null) {
+      //delay for 1 second
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("waiting for page object");
+    }
 
 
     return await isPrivate(this.page)
@@ -172,6 +177,12 @@ class instagramUser {
 close(){
     browser.close();
 }
+
+async searchPosts(searchTerm) {
+   // await loadPosts(this.page)
+    return await searchPost(this.page, searchTerm);
+  }
+
 
 }
 

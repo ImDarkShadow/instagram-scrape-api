@@ -1,6 +1,8 @@
 import MiniSearch from "minisearch";
 
 const searchPost = async (page, searchTerm) => {
+  console.log("searching for posts");
+  console.log(searchTerm)
   let postLinks = await page.$$eval('a[href^="/p/"]', (postLinks) =>
     postLinks.map((link, index) => {
       const img = link.querySelector("img");
@@ -17,9 +19,10 @@ const searchPost = async (page, searchTerm) => {
     fields: ["alt", "link"], // fields to index for full-text search
     storeFields: ["link", "thumbnail", "alt"], // fields to return with search results
   });
+ // console.log(postLinks)
   miniSearch.addAll(postLinks);
 
-  return miniSearch.search(searchTerm);
+  return  miniSearch.search(searchTerm);
 };
 
 export default searchPost;
