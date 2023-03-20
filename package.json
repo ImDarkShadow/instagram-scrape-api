@@ -1,8 +1,9 @@
 {
-  "name": "instagram-scrape-api",
+  "name": "instagram-tools",
   "version": "1.0.0",
   "description": "A package to scrpae instagram via imginn",
   "main": "index.js",
+  "repository": "https://github.com/ImDarkShadow/instagram-tools",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

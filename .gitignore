@@ -107,3 +107,4 @@ dist
 *.html
 *.txt
 test.js
+./package-lock.json

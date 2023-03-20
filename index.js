@@ -29,7 +29,6 @@ class instagramUser {
         await page.setViewport({width: 1280, height: 5000});
         this.page = page;
 
-        // browser.close();
     }
 
     async isAccountPrivate() {
