@@ -1,6 +1,6 @@
 {
   "name": "instagram-tools",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A package to scrpae instagram via imginn",
   "main": "index.js",
   "repository": "https://github.com/ImDarkShadow/instagram-tools",

@@ -25,7 +25,7 @@ const isVaidAccount = async (page) => {
     return await page.evaluate(() => {
         const accountNotFound = document.querySelector(".page-error");
 
-        return !!accountNotFound
+        return !accountNotFound
     });
 };
 export {checkError, isPrivate, isVaidAccount};

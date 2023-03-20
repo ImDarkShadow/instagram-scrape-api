@@ -108,3 +108,4 @@ dist
 *.txt
 test.js
 ./package-lock.json
+./.idea
