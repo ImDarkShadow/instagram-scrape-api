@@ -1,6 +1,6 @@
 {
   "name": "instagram-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A package to scrpae instagram via imginn",
   "main": "index.js",
   "repository": "https://github.com/ImDarkShadow/instagram-tools",
@@ -12,12 +12,14 @@
     "instagram",
     "api",
     "scrape",
-    "search"
+    "search",
+    "imginn",
+    "instagram-tools",
+    "instagram-api"
   ],
   "author": "Pritam Das",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.3",
     "minisearch": "^6.0.1",
     "puppeteer": "^19.7.5"
   }
