@@ -13,10 +13,10 @@ const checkError = async (page) => {
   });
 };
 
-const isPrivate = async (page) => {
-  return await page.evaluate(() => {
+const isPrivate = (page) => {
+  return page.evaluate(() => {
     const privateAccount = document.querySelector(".error");
-    return privateAccount ? true : false;
+    return !!privateAccount
   });
 };
 
@@ -24,7 +24,7 @@ const isVaidAccount = async (page) => {
   return await page.evaluate(() => {
     const accountNotFound = document.querySelector(".error-page");
 
-    return accountNotFound ? true : false;
+    return !!accountNotFound
   });
 };
-export default checkError;
+export { checkError, isPrivate, isVaidAccount };

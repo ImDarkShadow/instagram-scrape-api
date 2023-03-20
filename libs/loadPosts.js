@@ -15,6 +15,7 @@ const loadPosts = async (page) => {
       });
     }
   } catch (error) {}
+  return page;
 };
 
 export default loadPosts;
