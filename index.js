@@ -36,7 +36,6 @@ class instagramUser {
         while (this.page == null) {
             //delay for 1 second
             await new Promise((resolve) => setTimeout(resolve, 1000));
-            console.log("waiting for page object");
         }
 
 
@@ -48,7 +47,6 @@ class instagramUser {
         while (this.page == null) {
             //delay for 1 second
             await new Promise((resolve) => setTimeout(resolve, 1000));
-            console.log("waiting for page object");
         }
 
 
